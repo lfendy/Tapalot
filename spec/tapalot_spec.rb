@@ -1,5 +1,5 @@
 require 'spec_helper.rb'
-
+require File.dirname(__FILE__) + '/../app/tapalot.rb'
 
 =begin
 * how to keep going
@@ -7,31 +7,6 @@ require 'spec_helper.rb'
 =end
 
 
-class Tapalot
-
-  attr_reader :current_tap, :current_measure
-
-  def initialize opts
-    @opts = opts
-  end
-
-  def reset
-    @current_tap = 1
-    @current_measure = 1
-  end
-
-  def tap measures=1, &block
-    beats = @opts[:beats]
-    bpm = @opts[:bpm]
-    interval = 60.0 / bpm.to_f
-    measures.times do
-      beats.times do |x|
-        sleep(interval)
-        yield (x+1)
-      end
-    end
-  end
-end
 
 
 describe Tapalot do
@@ -65,6 +40,7 @@ describe Tapalot do
       t = Tapalot.new @opts
 
       t.tap {|x| mockproc.call(x)}
+      sleep(0.2)
     end
 
     it "should tap beat at appropriate times" do
@@ -78,6 +54,7 @@ describe Tapalot do
       @opts[:bpm]      = bpm
       t = Tapalot.new @opts
       t.tap &check_for_timing
+      sleep(0.2)
     end
 
     it "should tap for correct number of measures" do
@@ -90,9 +67,8 @@ describe Tapalot do
       t = Tapalot.new @opts
 
       t.tap(2) {|x| mockproc.call(x)}
-        
+      sleep(0.3)
     end
-
   end
 
   describe "#stop" do
@@ -110,8 +86,9 @@ describe Tapalot do
       t = Tapalot.new @opts
 
       t.tap(10) {|x| mockproc.call(x)}
-      sleep(0.2)
+      sleep(0.21)
       t.stop
+      sleep(0.2)
       
     end
   end
