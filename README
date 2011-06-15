@@ -15,5 +15,37 @@ want to do:
 1. parse input file (bpm, change in unit of measure, pauses, instruments)
 2. run metronome
 3. play and show song structure.
-4. easy keyboard controll to repeat, stop, change bpm
+4. easy keyboard control to repeat, stop, change bpm
+5. hook with mp3 and try to play the specific section of song
+
+
+sample:
+
+instruments:
+g1: lead guitar
+g2: guitar 2
+b: bass
+v: vocal
+k: keys
+d: drums
+
+[4/4 160]
+
++k
+intro 4x
+
++v
+verse1 "bla bla" 8x
+
++d +g1 +g2
+chorus 8x
+
+
+[6/8 160]
+
+!v !g1
+bridge 16x
+
+
+
 
