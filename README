@@ -10,13 +10,20 @@ take measure value
 print out measure according to bpm and uom
 
 
+second release: 
+given number of measures and beats,
+it will show the beats for measure times.
+
 
 want to do:
-1. parse input file (bpm, change in unit of measure, pauses, instruments)
-2. run metronome
-3. play and show song structure.
-4. easy keyboard control to repeat, stop, change bpm
-5. hook with mp3 and try to play the specific section of song
+. parse input file (bpm, change in unit of measure, pauses, instruments)
+. run metronome
+. play and show song structure.
+. easy keyboard control to repeat, stop, change bpm
+. hook with mp3 and try to play the specific section of song
+. want decimal number for number of measures
+
+
 
 
 sample:

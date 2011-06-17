@@ -22,12 +22,14 @@ class Tapalot
     bpm = @opts[:bpm]
     interval = 60.0 / bpm.to_f
     @timer.add({:period => interval, :once => false}) do
-      yield current_tap
+      yield current_tap, current_measure
       tick
       stop if current_measure > measures
     end
     @timer.start
   end
+
+private
 
   def tick
     beats = @opts[:beats]

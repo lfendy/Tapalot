@@ -59,14 +59,17 @@ describe Tapalot do
 
     it "should tap for correct number of measures" do
       mockproc = 'mockproc'
-      mock(mockproc).call(1).times(2)
-      mock(mockproc).call(2).times(2)
-      mock(mockproc).call(3).times(2)
+      mock(mockproc).call(1,1)
+      mock(mockproc).call(2,1)
+      mock(mockproc).call(3,1)
+      mock(mockproc).call(1,2)
+      mock(mockproc).call(2,2)
+      mock(mockproc).call(3,2)
 
       @opts[:bpm]      = 1800
       t = Tapalot.new @opts
 
-      t.tap(2) {|x| mockproc.call(x)}
+      t.tap(2) {|tap,measure| mockproc.call(tap,measure)}
       sleep(0.3)
     end
   end
