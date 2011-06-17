@@ -13,7 +13,7 @@ module Console
   end
 
   def print_measure(x)
-    print "\n measure: " + x.to_s.green
+    print " measure: " + x.to_s.green
   end
 
   def clear_screen

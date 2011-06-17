@@ -22,7 +22,7 @@ want to do:
 . easy keyboard control to repeat, stop, change bpm
 . hook with mp3 and try to play the specific section of song
 . want decimal number for number of measures
-
+. want way to define when an instrument enters
 
 
 
@@ -42,7 +42,7 @@ d: drums
 intro 4x
 
 +v
-verse1 "bla bla" 8x
+verse1, drum enter   8x
 
 +d +g1 +g2
 chorus 8x

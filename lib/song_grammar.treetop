@@ -1,0 +1,112 @@
+require 'song'
+
+grammar SongGrammar
+
+  rule song
+    startsongmarker
+    sections:section+ 
+    endsongmarker {
+      def value
+        ss = sections.elements.map {|x| x.value}
+        Song.new ss
+      end
+    }
+  end
+
+  rule startsongmarker
+    '#'2.. ws nl
+  end
+  rule endsongmarker
+    nl? '#'2.. ws nl
+  end
+
+
+  rule section
+    r:(rhythm nl)?
+    heading repetition nl {
+      def value
+        SongSection.new({
+                          :rhythm => r.respond_to?(:rhythm) ? r.rhythm.value : nil,
+                          :heading => heading.text_value,
+                          :repetition => repetition.value
+                        })
+      end
+        
+    }
+  end
+
+
+  rule rhythm
+    ws '[' time_signature ws tempo ']' ws {
+      def value
+        Rhythm.new({
+                    :tempo => tempo.value,
+                    :beats => time_signature.beats_value,
+                    :measure => time_signature.measure_value
+                   })
+      end
+    }
+  end
+
+  rule time_signature
+    beats '/' measure {
+      def beats_value
+        beats.value
+      end
+      
+      def measure_value
+        measure.value
+      end
+    }
+
+  end
+
+  rule tempo
+    '' n:number {
+      def value
+        n.text_value.to_i
+      end
+    }
+  end
+
+  rule beats
+    '' n:number {
+      def value
+        n.text_value.to_i
+      end
+    }
+  end
+
+  rule measure
+    '' n:number {
+      def value
+        n.text_value.to_i
+      end
+    }
+  end
+
+  rule heading
+    ws (!repetition (.))* 
+  end
+
+  rule repetition
+    n:number 'x' {
+      def value
+        n.text_value.to_i
+      end
+    }
+  end  
+
+  rule number
+    [1-9] [0-9]*
+  end
+
+  rule ws
+    ([\t ])*
+  end
+
+  rule nl
+    [\n]+
+  end
+
+end
