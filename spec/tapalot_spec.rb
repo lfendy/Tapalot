@@ -1,5 +1,6 @@
 require 'spec_helper.rb'
-require File.dirname(__FILE__) + '/../app/tapalot.rb'
+#require File.dirname(__FILE__) + '/../app/tapalot.rb'
+require 'tapalot'
 
 =begin
 * how to keep going
