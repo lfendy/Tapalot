@@ -28,18 +28,22 @@ def run song
     rhythm = s.rhythm.nil? ? rhythm : s.rhythm
     beats = rhythm.beats
     heading = s.heading
+    repetition = s.repetition
+    idx = song.sections.index s
+    sliced = song.sections.slice idx+1, 1000
+    still_to_go = sliced.map{|x| x.heading}
     t = Tapalot.new({
                   :beats => beats,
                   :measure => rhythm.measure,
                   :tempo => rhythm.tempo
                 })
     taps.push lambda { 
-              t.tap(s.repetition) {
+              t.tap(repetition) {
                 |tap,measure| 
                 clear_screen
                 print_beat(tap,beats) 
-                print_measure(measure)
-                print_heading(heading)
+                print_measure(measure, repetition)
+                print_heading(heading, still_to_go)
               } 
             }
     prev_tap.when_done taps.pop unless prev_tap.nil?

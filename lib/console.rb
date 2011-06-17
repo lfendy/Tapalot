@@ -12,12 +12,12 @@ module Console
     print "beat: " + (1..max_x).to_a.map {|c| c == x ? c.to_s.spread.black.on_white : c.to_s }.join
   end
 
-  def print_measure(x)
-    print " measure: " + x.to_s.green
+  def print_measure(x, max_x)
+    print " measure: " + x.to_s.green + " of " + max_x.to_s.green
   end
 
-  def print_heading heading
-    print "\n\n" + heading
+  def print_heading heading, still_to_go
+    print "\n\n" + heading.green + "\n" + still_to_go.join("\n")
   end
 
   def clear_screen
