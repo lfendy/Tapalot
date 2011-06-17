@@ -26,7 +26,7 @@ describe Tapalot do
       @opts =  {
                 :beats => 3,
                 :measure => 4,
-                :bpm => 180
+                :tempo => 180
                }
     end
   
@@ -36,7 +36,7 @@ describe Tapalot do
       mock(mockproc).call(2)
       mock(mockproc).call(3)
 
-      @opts[:bpm]      = 1800
+      @opts[:tempo]      = 1800
       t = Tapalot.new @opts
 
       t.tap {|x| mockproc.call(x)}
@@ -44,14 +44,14 @@ describe Tapalot do
     end
 
     it "should tap beat at appropriate times" do
-      bpm = 1800
-      bps = bpm.to_f / 60.0
+      tempo = 1800
+      bps = tempo.to_f / 60.0
       interval = 1.0 / bps
       now = Time.now
       check_for_timing = lambda { |x| 
                 ((Time.now - now) - (interval*x)).abs.should < 0.001
                }
-      @opts[:bpm]      = bpm
+      @opts[:tempo]      = tempo
       t = Tapalot.new @opts
       t.tap &check_for_timing
       sleep(0.2)
@@ -66,7 +66,7 @@ describe Tapalot do
       mock(mockproc).call(2,2)
       mock(mockproc).call(3,2)
 
-      @opts[:bpm]      = 1800
+      @opts[:tempo]      = 1800
       t = Tapalot.new @opts
 
       t.tap(2) {|tap,measure| mockproc.call(tap,measure)}
@@ -84,7 +84,7 @@ describe Tapalot do
       @opts =  {
                 :beats => 3,
                 :measure => 4,
-                :bpm => 1800
+                :tempo => 1800
                }
       t = Tapalot.new @opts
 
@@ -93,6 +93,21 @@ describe Tapalot do
       t.stop
       sleep(0.2)
       
+    end
+
+    it "should invoke callback at stopping" do
+      mockproc = 'mockproc'
+      mock(mockproc).call().times(1)
+      @opts =  {
+                :beats => 3,
+                :measure => 4,
+                :tempo => 1800
+               }
+      t = Tapalot.new @opts
+      t.when_done lambda { mockproc.call}
+      t.tap(1) { }
+      sleep(0.2)
+
     end
   end
 

@@ -19,14 +19,18 @@ class Tapalot
   end
 
   def tap measures=1, &block
-    bpm = @opts[:bpm]
-    interval = 60.0 / bpm.to_f
+    tempo = @opts[:tempo]
+    interval = 60.0 / tempo.to_f
     @timer.add({:period => interval, :once => false}) do
       yield current_tap, current_measure
       tick
-      stop if current_measure > measures
+      done if current_measure > measures
     end
     @timer.start
+  end
+
+  def when_done callback
+    @when_done_callback = callback
   end
 
 private
@@ -40,4 +44,10 @@ private
     end
   end
 
+  def done
+    stop
+    @when_done_callback.call unless @when_done_callback.nil?
+  end
+
 end
+

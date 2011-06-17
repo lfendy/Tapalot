@@ -14,6 +14,11 @@ second release:
 given number of measures and beats,
 it will show the beats for measure times.
 
+third:
+parse song structure
+tap and show according to song structure
+
+
 
 want to do:
 . parse input file (bpm, change in unit of measure, pauses, instruments)
