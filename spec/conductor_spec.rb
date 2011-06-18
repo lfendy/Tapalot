@@ -3,8 +3,9 @@ require 'metronome'
 
 class Conductor
 
+  attr_reader :metronomes
   def initialize song
-    song.sections.map {|x| Metronome.new x.rhythm }
+    @metronomes = song.sections.map {|x| Metronome.new x.rhythm }
   end
 
 end
@@ -25,11 +26,14 @@ describe Conductor do
       s2 = 's2'
       mock(s1).rhythm {'v1'}
       mock(s2).rhythm {'v2'}
-      mock(Metronome).new('v1')
-      mock(Metronome).new('v2')
+      mock(Metronome).new('v1') {'m1'}
+      mock(Metronome).new('v2') {'m2'}
   
       mock(song).sections {[s1,s2]}
-      Conductor.new song      
+      c = Conductor.new song      
+      c.metronomes.count.should == 2
+      c.metronomes.include?('m1').should be_true
+      c.metronomes.include?('m2').should be_true
     end
 
     

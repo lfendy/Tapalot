@@ -62,11 +62,11 @@ grammar SongGrammar
   rule rhythm
     ws '[' time_signature ws tempo ']' ws {
       def value
-        Rhythm.new({
-                    :tempo => tempo.value,
-                    :beats => time_signature.beats_value,
-                    :measure => time_signature.measure_value
-                   })
+        ({
+           :tempo => tempo.value,
+           :beats => time_signature.beats_value,
+           :measure => time_signature.measure_value
+         })
       end
     }
   end

@@ -25,19 +25,13 @@ def run song
   taps = []
   prev_tap = nil
   song.sections.each do |s|
-    rhythm = s.rhythm.nil? ? rhythm : s.rhythm
-    beats = rhythm.beats
     heading = s.heading
     repetition = s.repetition
-    t = Metronome.new({
-                  :beats => beats,
-                  :measure => rhythm.measure,
-                  :tempo => rhythm.tempo
-                })
+    t = Metronome.new s.rhythm
     taps.push lambda { 
               t.tap(repetition) {
                 |tap,measure| 
-                print_beat(tap,beats) 
+                print_beat(tap,6) 
                 print_measure(measure, repetition)
                 print_heading(heading, [])
               } 
