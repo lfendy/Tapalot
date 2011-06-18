@@ -23,14 +23,20 @@ class Rhythm
     @beats = opts[:beats]
     @measure = opts[:measure]
   end
+  def value
+    {:beats => @beats, :tempo => @tempo, :measure => @measure}
+  end
 end
 
 class SongSection
-  attr_reader :rhythm, :heading, :repetition
+  attr_reader :heading, :repetition
   def initialize opts
     @rhythm = opts[:rhythm]
     @heading = opts[:heading]
     @repetition = opts[:repetition]
     
+  end
+  def rhythm
+    @rhythm.nil? ? nil : @rhythm.value
   end
 end

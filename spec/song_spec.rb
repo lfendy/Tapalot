@@ -36,9 +36,9 @@ heading_b 10x
 
       s1 = sections[0]
       s1.rhythm.should_not be_nil
-      s1.rhythm.beats.should == 3
-      s1.rhythm.measure.should == 4
-      s1.rhythm.tempo.should == 180
+      s1.rhythm[:beats].should == 3
+      s1.rhythm[:measure].should == 4
+      s1.rhythm[:tempo].should == 180
       s1.heading.include?("heading_1").should be_true
       s1.repetition.should == 4
 
@@ -49,9 +49,9 @@ heading_b 10x
 
       s3 = sections[2]
       s3.rhythm.should_not be_nil
-      s3.rhythm.beats.should == 4
-      s3.rhythm.measure.should == 4
-      s3.rhythm.tempo.should == 120
+      s3.rhythm[:beats].should == 4
+      s3.rhythm[:measure].should == 4
+      s3.rhythm[:tempo].should == 120
       s3.heading.include?("heading_a").should be_true
       s3.repetition.should == 2
 

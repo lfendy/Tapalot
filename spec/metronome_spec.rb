@@ -1,13 +1,6 @@
 require 'spec_helper.rb'
 require 'metronome'
 
-=begin
-* how to keep going
-* how to stop -- need to introduce timer
-=end
-
-
-
 
 describe Metronome do
 
@@ -30,7 +23,7 @@ describe Metronome do
                }
     end
   
-    it "should tap the correct beats for each measure" do
+    it "should tap beats correct number of times for each measure" do
       mockproc = 'mockproc'
       mock(mockproc).call(1)
       mock(mockproc).call(2)
