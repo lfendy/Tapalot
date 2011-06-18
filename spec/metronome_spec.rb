@@ -1,5 +1,5 @@
 require 'spec_helper.rb'
-require 'tapalot'
+require 'metronome'
 
 =begin
 * how to keep going
@@ -9,11 +9,11 @@ require 'tapalot'
 
 
 
-describe Tapalot do
+describe Metronome do
 
   describe "#reset" do
     it "should reset current tap and measure count to 1" do
-      t = Tapalot.new({})
+      t = Metronome.new({})
       t.reset
       t.current_tap.should == 1
       t.current_measure.should == 1
@@ -37,7 +37,7 @@ describe Tapalot do
       mock(mockproc).call(3)
 
       @opts[:tempo]      = 1800
-      t = Tapalot.new @opts
+      t = Metronome.new @opts
 
       t.tap {|x| mockproc.call(x)}
       sleep(0.2)
@@ -52,7 +52,7 @@ describe Tapalot do
                 ((Time.now - now) - (interval*x)).abs.should < 0.001
                }
       @opts[:tempo]      = tempo
-      t = Tapalot.new @opts
+      t = Metronome.new @opts
       t.tap &check_for_timing
       sleep(0.2)
     end
@@ -67,7 +67,7 @@ describe Tapalot do
       mock(mockproc).call(3,2)
 
       @opts[:tempo]      = 1800
-      t = Tapalot.new @opts
+      t = Metronome.new @opts
 
       t.tap(2) {|tap,measure| mockproc.call(tap,measure)}
       sleep(0.3)
@@ -86,7 +86,7 @@ describe Tapalot do
                 :measure => 4,
                 :tempo => 1800
                }
-      t = Tapalot.new @opts
+      t = Metronome.new @opts
 
       t.tap(10) {|x| mockproc.call(x)}
       sleep(0.21)
@@ -103,7 +103,7 @@ describe Tapalot do
                 :measure => 4,
                 :tempo => 1800
                }
-      t = Tapalot.new @opts
+      t = Metronome.new @opts
       t.when_done lambda { mockproc.call}
       t.tap(1) { }
       sleep(0.2)

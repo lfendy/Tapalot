@@ -1,4 +1,4 @@
-class Tapalot
+class Metronome
 
   require 'actiontimer'
   attr_reader :current_tap, :current_measure

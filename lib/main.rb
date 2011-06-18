@@ -1,5 +1,5 @@
 $LOAD_PATH.unshift(File.dirname(__FILE__))
-require 'tapalot'
+require 'metronome'
 require 'console'
 require 'song'
 
@@ -29,10 +29,7 @@ def run song
     beats = rhythm.beats
     heading = s.heading
     repetition = s.repetition
-    idx = song.sections.index s
-    sliced = song.sections.slice idx+1, 1000
-    still_to_go = sliced.map{|x| x.heading}
-    t = Tapalot.new({
+    t = Metronome.new({
                   :beats => beats,
                   :measure => rhythm.measure,
                   :tempo => rhythm.tempo
@@ -42,7 +39,7 @@ def run song
                 |tap,measure| 
                 print_beat(tap,beats) 
                 print_measure(measure, repetition)
-                print_heading(heading, still_to_go)
+                print_heading(heading, [])
               } 
             }
     prev_tap.when_done taps.pop unless prev_tap.nil?
