@@ -40,7 +40,6 @@ def run song
     taps.push lambda { 
               t.tap(repetition) {
                 |tap,measure| 
-                clear_screen
                 print_beat(tap,beats) 
                 print_measure(measure, repetition)
                 print_heading(heading, still_to_go)
@@ -49,6 +48,7 @@ def run song
     prev_tap.when_done taps.pop unless prev_tap.nil?
     prev_tap = t
   end
+  clear_screen
   taps[0].call
 
 end
