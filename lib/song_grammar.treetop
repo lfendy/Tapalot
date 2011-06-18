@@ -4,11 +4,12 @@ grammar SongGrammar
 
   rule song
     startsongmarker
+    instruments
     sections:section+ 
     endsongmarker {
       def value
         ss = sections.elements.map {|x| x.value}
-        Song.new ss
+        Song.new instruments.value, ss
       end
     }
   end
@@ -17,13 +18,35 @@ grammar SongGrammar
     '#'2.. ws nl
   end
   rule endsongmarker
-    nl? '#'2.. ws nl
+    nl? '#'2.. ws nl?
   end
 
+  rule instruments
+    'instruments:' ws nl
+    i:(instrument_key ': ' instrument_name nl)+
+    nl* {
+      def value
+        i.elements.inject({}) {|result,x|
+                                result[x.instrument_key.text_value] = 
+                                  x.instrument_name.text_value;
+                                result
+                              }
+      end
+    }
+  end
+  
+
+  rule instrument_key
+    ws [A-Za-z0-9]+ ws
+  end
+
+  rule instrument_name
+    ws [A-Za-z0-9]+ ws
+  end
 
   rule section
-    r:(rhythm nl)?
-    heading repetition nl {
+    r:(rhythm nl+)?
+    heading repetition ws nl+ {
       def value
         SongSection.new({
                           :rhythm => r.respond_to?(:rhythm) ? r.rhythm.value : nil,
@@ -106,7 +129,7 @@ grammar SongGrammar
   end
 
   rule nl
-    [\n]+
+    [\n]
   end
 
 end

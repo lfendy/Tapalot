@@ -15,8 +15,13 @@ describe Song do
     it "should parse" do
 
       str = "####
+instruments:
+g1: guitar1
+g2: guitar2
+d: drum
+v: vocal
 [3/4 180]
-heading_1 4x
+heading_1 4x  
 heading_2 8x
 [4/4 120]
 heading_a 2x
@@ -55,7 +60,12 @@ heading_b 10x
       s4.heading.include?("heading_b").should be_true
       s4.repetition.should == 10
 
-  
+      s.instruments.count.should == 4
+      s.instruments["g1"].should == "guitar1"
+      s.instruments["g2"].should == "guitar2"
+      s.instruments["d"].should == "drum"
+      s.instruments["v"].should == "vocal"
+ 
     end
   end
 

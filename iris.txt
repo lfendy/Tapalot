@@ -1,4 +1,8 @@
 ####
+instruments:
+g1: guitar1
+g2: guitar2
+
 [4/4 180]
 intro 4x
 [6/8 180]

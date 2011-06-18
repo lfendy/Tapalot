@@ -4,9 +4,10 @@ require 'song_grammar'
 
 
 class Song
-  attr_reader :sections
-  def initialize sections
+  attr_reader :sections, :instruments
+  def initialize instruments, sections
     @sections = sections
+    @instruments = instruments
   end
   def self.parse str
     sp = SongGrammarParser.new
