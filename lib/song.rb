@@ -17,7 +17,8 @@ class Song
 end
 
 class SongSection
-  attr_reader :rhythm, :heading, :repetition
+  attr_reader :heading, :repetition
+  attr_accessor :rhythm
   def initialize opts
     @rhythm = opts[:rhythm]
     @heading = opts[:heading]

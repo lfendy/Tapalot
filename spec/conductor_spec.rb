@@ -16,8 +16,8 @@ describe Conductor do
       song = 'song'
       s1 = 's1'
       s2 = 's2'
-      mock(s1).rhythm {'v1'}
-      mock(s2).rhythm {'v2'}
+      stub(s1).rhythm {'v1'}
+      stub(s2).rhythm {'v2'}
       mock(Metronome).new('v1') {'m1'}
       mock(Metronome).new('v2') {'m2'}
       stub(song).sections {[s1,s2]}
@@ -34,6 +34,7 @@ describe Conductor do
         c.metronomes.include?('m2').should be_true
         c.song.should == @song
       end
+
     end
     
     describe "#metronome" do
@@ -62,22 +63,48 @@ describe Conductor do
       end
     end
 
+    describe "#prev_sections" do
+      it "should get array of previous sections" do
+        c = Conductor.new @song
+        c.update_count
+        c.prev_sections.should == [@section1]
+      end
+      it "should return empty array if no previous sections" do
+        c = Conductor.new @song
+        c.prev_sections.should == []
+      end
+    end
+
+    describe "#next_sections" do
+      it "should return empty array if no next sections" do
+        c = Conductor.new @song
+        c.update_count
+        c.update_count
+        c.next_sections.should == []
+      end
+      it "should get array of next sections" do
+        c = Conductor.new @song
+        c.next_sections.should == [@section2]
+      end
+    end
+    
+
   end
 
   describe "#reset" do
-    it "should reset current session to 0" do
+    it "should reset current section to 0" do
       c = Conductor.new
       c.reset
-      c.current_session.should == 0
+      c.current_section.should == 0
     end
   end
 
   describe "#update_count" do
-    it "should increase current session index by 1" do
+    it "should increase current section index by 1" do
       c = Conductor.new
       c.reset
       c.update_count
-      c.current_session.should == 1
+      c.current_section.should == 1
     end
   end
 

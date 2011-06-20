@@ -4,6 +4,7 @@ class Metronome
   attr_reader :current_tap, :current_measure
 
   def initialize opts
+    raise "WTF" if opts.nil?
     @opts = opts
     @timer = ActionTimer::Timer.new(:auto_start => false)
     self.reset

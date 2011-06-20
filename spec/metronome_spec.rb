@@ -4,6 +4,12 @@ require 'metronome'
 
 describe Metronome do
 
+  describe "#initialize" do
+    it "should raise error when instantiated with nil arg" do
+      lambda {Metronome.new(nil)}.should raise_error
+    end
+  end
+
   describe "#reset" do
     it "should reset current tap and measure count to 1" do
       t = Metronome.new({})

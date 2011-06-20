@@ -2,6 +2,7 @@ $LOAD_PATH.unshift(File.dirname(__FILE__))
 require 'metronome'
 require 'console'
 require 'song'
+require 'conductor'
 
 include Console
 
@@ -13,7 +14,9 @@ class Main
     clear_screen
     f = File.open(args.shift)
     s = Song.parse f.read
-    run s 
+    c = Conductor.new s
+    c.run
+    #run s 
     sleep
   end
 

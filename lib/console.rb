@@ -17,8 +17,12 @@ module Console
     print " measure: " + x.to_s.green + " of " + max_x.to_s.green
   end
 
-  def print_heading heading, still_to_go
-    print "\n\n" + heading.green + "\n" + still_to_go.join("\n")
+  def print_heading hash
+    heading = hash[:heading].green
+    past_headings = hash[:past_headings]
+    future_headings = hash[:future_headings]
+    headings = past_headings.concat([heading]).concat(future_headings)
+    print "\n\n" + headings.join("\n")
   end
 
   def clear_screen
