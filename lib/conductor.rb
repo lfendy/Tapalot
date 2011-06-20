@@ -48,22 +48,25 @@ class Conductor
   def run
     return if metronome.nil?
     @in_play = update_instruments @in_play, section.transitions
-    next_play = update_instruments @in_play, section.transitions
+    next_play = next_section.nil? ?
+                nil :
+                update_instruments(@in_play, next_section.transitions)
     metronome.when_done lambda {
                           update_count
                           run
                         }
-    metronome.tap(section.repetition) {
+    rep = section.repetition
+    beats = section.rhythm[:beats]
+    metronome.tap(rep) {
                 |tap,measure|
-                print_beat(tap,section.rhythm[:beats])
-                print_measure(measure, section.repetition)
-=begin
+                print_beat(tap,beats)
+                print_measure(measure, rep)
                 print_instruments({
                  :tap => tap,
+                 :beats => beats,
                  :in_play => @in_play,
                  :next_play => next_play
                 })
-=end
                 
                 print_heading({
                                 :past_headings => prev_sections.map(&:heading),
@@ -92,7 +95,12 @@ class Conductor
     to_return
   end
 
+  def next_section
+    next_sections[0]
+  end
+
 end
+
 
 
 

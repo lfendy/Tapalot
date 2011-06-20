@@ -6,6 +6,11 @@ module Console
     def spread
       " " + self + " "
     end
+    def align_right len
+      x = self
+      (len-self.length).times {x+=" "}
+      x
+    end
   end
 
   def print_beat(x,max_x)
@@ -23,6 +28,27 @@ module Console
     future_headings = hash[:future_headings]
     headings = past_headings.concat([heading]).concat(future_headings)
     print "\n\n" + headings.join("\n")
+  end
+
+  def print_instruments hash
+    tap = hash[:tap]
+    beats = hash[:beats]
+    in_play = hash[:in_play]
+    next_play = hash[:next_play]
+    print "\n\n"
+
+    in_play.each_key do |key|
+      print key.align_right(4) + "|"
+      plays = play(in_play[key]).green
+      plays += "|" + play(next_play[key]) unless next_play.nil?
+      print plays
+      print "\n"
+    end
+    
+  end
+
+  def play in_play
+    in_play ? "################" : "________________"
   end
 
   def clear_screen

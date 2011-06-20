@@ -2,10 +2,18 @@
 instruments:
 g1: guitar1
 g2: guitar2
+d: drum
+b: bass
+v: vocal
 
-[4/4 180]
-intro 4x
-[6/8 180]
-Verse 1 4x
+[4/4 157]
++g1
+intro 8x 
+[6/8 157]
++b +d +v
+Verse 1 8x
+Verse 2 8x
+-b
+Verse 3 8x
 Chorus 4x
 ####
