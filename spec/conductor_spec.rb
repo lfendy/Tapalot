@@ -7,6 +7,7 @@ class Conductor
   def initialize song=nil
     @metronomes = song.sections.map {|x| Metronome.new x.rhythm } unless song.nil?
     @song = song
+    reset
   end
 
   def reset
@@ -21,6 +22,15 @@ class Conductor
 
   end
 
+  def metronome idx=@current_session
+    @metronomes[idx]
+  end
+
+  def section idx=@current_session
+    @song.sections[idx]
+  end
+
+
 end
 
 
@@ -31,9 +41,9 @@ describe Conductor do
   
   # init should instantiate all required metronome  
 
-  describe "#initialize" do
+  context "given a valid song" do
 
-    it "should instantiate all associated metronomes for sections" do
+    before :each do
       song = 'song'
       s1 = 's1'
       s2 = 's2'
@@ -41,13 +51,46 @@ describe Conductor do
       mock(s2).rhythm {'v2'}
       mock(Metronome).new('v1') {'m1'}
       mock(Metronome).new('v2') {'m2'}
-  
-      mock(song).sections {[s1,s2]}
-      c = Conductor.new song      
-      c.metronomes.count.should == 2
-      c.metronomes.include?('m1').should be_true
-      c.metronomes.include?('m2').should be_true
-      c.song.should == song
+      stub(song).sections {[s1,s2]}
+      @song = song
+      @section1 = s1
+      @section2 = s2
+    end
+
+    describe "#initialize" do
+      it "should instantiate all associated metronomes for sections" do
+        c = Conductor.new @song      
+        c.metronomes.count.should == 2
+        c.metronomes.include?('m1').should be_true
+        c.metronomes.include?('m2').should be_true
+        c.song.should == @song
+      end
+    end
+    
+    describe "#metronome" do
+      it "should get the current sessions metronome" do
+        c = Conductor.new @song      
+        c.update_count
+        c.metronome.should == 'm2'
+      end
+      it "should get the metronome at the index" do
+        c = Conductor.new @song
+        c.metronome(0).should == 'm1'
+        c.metronome(1).should == 'm2'
+      end
+    end
+
+    describe "#section" do
+      it "should get the current session" do
+        c = Conductor.new @song      
+        c.update_count
+        c.section.should == @section2
+      end
+      it "should get the current session" do
+        c = Conductor.new @song      
+        c.section(0).should == @section1
+        c.section(1).should == @section2
+      end
     end
 
   end
@@ -68,5 +111,7 @@ describe Conductor do
       c.current_session.should == 1
     end
   end
+
+
 end
 

@@ -19,6 +19,26 @@ parse song structure
 tap and show according to song structure
 
 
+===========================
+
+To do / To think about:
+. Conductor initialize function knows about Song structure,
+is this necessary? There is a bit too much coupling
+
+. Metronomes are instantiated for every Song Section,
+not intuitive to create a new 'counter' object for different section
+is it possible to stop / reset / re-assign parameters to existing metronome ?
+
+. Test sucks, is it an indication of bad design ?
+in some cases, heavy mocking, also in other cases not DRY
+
+
+
+
+
+
+
+
 
 want to do:
 . parse input file (bpm, change in unit of measure, pauses, instruments)
