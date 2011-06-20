@@ -11,6 +11,16 @@ module Console
       (len-self.length).times {x+=" "}
       x
     end
+    def highlight_tap tap, max_tap
+      section = self.length/max_tap
+      start_idx = (tap-1)*section
+      end_idx = (tap*section)-1
+      range = (start_idx..end_idx)
+      start = start_idx > 0 ? self[0..start_idx-1].green : ""
+      mid = self[start_idx..end_idx].black.on_white  
+      ends = end_idx + 1 < length ? self[end_idx+1..self.length].green : ""
+      start + mid + ends
+    end
   end
 
   def print_beat(x,max_x)
@@ -31,24 +41,34 @@ module Console
   end
 
   def print_instruments hash
-    tap = hash[:tap]
-    beats = hash[:beats]
-    in_play = hash[:in_play]
-    next_play = hash[:next_play]
+    tap          = hash[:tap]
+    beats        = hash[:beats]
+    next_beats   = hash[:next_beats]
+    in_play      = hash[:in_play]
+    next_play    = hash[:next_play]
+    heading      = hash[:heading]
+    next_heading = hash[:next_heading]
     print "\n\n"
+    print "\r    "
+    print heading.align_right(4*beats+1).green
+    print next_heading unless next_heading.nil?
+    print "\n"
 
     in_play.each_key do |key|
       print key.align_right(4) + "|"
-      plays = play(in_play[key]).green
-      plays += "|" + play(next_play[key]) unless next_play.nil?
+      plays = play(in_play[key], beats).highlight_tap(tap,beats)
+      plays += "|" + play(next_play[key], next_beats) unless next_play.nil?
       print plays
       print "\n"
     end
     
   end
 
-  def play in_play
-    in_play ? "################" : "________________"
+  def play in_play, beats
+    s = in_play ? "#" : "_"
+    r = "" 
+    (beats*4).times { r += s }
+    r
   end
 
   def clear_screen

@@ -6,10 +6,10 @@ d: drum
 b: bass
 v: vocal
 
-[4/4 157]
+[4/4 152]
 +g1
 intro 8x 
-[6/8 157]
+[6/8 152]
 +b +d +v
 Verse 1 8x
 Verse 2 8x
