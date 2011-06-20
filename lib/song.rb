@@ -4,7 +4,7 @@ require 'song_grammar'
 
 
 class Song
-  attr_reader :sections, :instruments
+  attr_reader :sections, :instruments, :transitions
   def initialize instruments, sections
     @sections = sections
     @instruments = instruments
@@ -17,12 +17,13 @@ class Song
 end
 
 class SongSection
-  attr_reader :heading, :repetition
+  attr_reader :heading, :repetition, :transitions
   attr_accessor :rhythm
   def initialize opts
     @rhythm = opts[:rhythm]
     @heading = opts[:heading]
     @repetition = opts[:repetition]
+    @transitions = opts[:transitions]
     
   end
 end

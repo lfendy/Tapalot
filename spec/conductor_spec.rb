@@ -21,6 +21,7 @@ describe Conductor do
       mock(Metronome).new('v1') {'m1'}
       mock(Metronome).new('v2') {'m2'}
       stub(song).sections {[s1,s2]}
+      stub(song).instruments {({})}
       @song = song
       @section1 = s1
       @section2 = s2
@@ -105,6 +106,49 @@ describe Conductor do
       c.reset
       c.update_count
       c.current_section.should == 1
+    end
+  end
+
+  describe "#fill_rhythm" do
+    it "should fill all sections with nil rhythm to previous section's rhythm" do
+      c = Conductor.new
+      require 'song'
+      sections = [
+                  SongSection.new({:rhythm => 'x'}),
+                  SongSection.new({:rhythm => nil}),
+                  SongSection.new({:rhythm => 'y'}),
+                  SongSection.new({:rhythm => nil})
+                 ]
+      c.fill_rhythm sections
+      sections.map(&:rhythm).should == ['x','x','y','y']
+    end
+  end
+
+  describe "#init_instruments" do
+    it "should create a new hash containing instrument keys with values set to false" do
+      c = Conductor.new
+      i = {:key1 => "value",:key2 => "value"}
+      c.init_instruments(i).should == {:key1 => false, :key2 => false}
+    end
+  end
+
+  describe "@update_instruments" do
+    it "should set instrument to false according to transitions" do
+      c = Conductor.new
+      in_play = {'g' => true, 'd' => true, 'k' => true}
+      transitions = [
+                     {:command => '-', :instrument_key => 'g'}
+                    ]
+      c.update_instruments(in_play, transitions).should == {'g' => false, 'd' => true, 'k' => true}
+    end
+
+    it "should set instrument to true according to transitions" do
+      c = Conductor.new
+      in_play = {'g' => false, 'd' => false, 'k' => false}
+      transitions = [
+                     {:command => '+', :instrument_key => 'd'}
+                    ]
+      c.update_instruments(in_play, transitions).should == {'g' => false, 'd' => true, 'k' => false}
     end
   end
 

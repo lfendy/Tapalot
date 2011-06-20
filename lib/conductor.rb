@@ -6,15 +6,26 @@ class Conductor
 
   attr_reader :metronomes, :current_section, :song
   def initialize song=nil
-    reset
     return if song.nil?
+
+    reset
+    fill_rhythm song.sections
+    @in_play = init_instruments song.instruments
+    @metronomes = song.sections.map do |x| 
+                                      Metronome.new x.rhythm 
+                                    end  
     @song = song
-    @song.sections.each_index {|i| 
-                                @song.sections[i].rhythm ||= @song.sections[i-1].rhythm }
-                            
-    @metronomes = @song.sections.map {|x| 
-                                     Metronome.new x.rhythm 
-                                     } 
+  end
+
+  def fill_rhythm sections
+    sections.each_index {|i| 
+                          sections[i].rhythm ||= sections[i-1].rhythm }
+  end
+
+  def init_instruments instruments
+    result = {}
+    instruments.each_key {|key| result[key] = false}
+    result
   end
 
   def reset
@@ -25,8 +36,19 @@ class Conductor
     @current_section+= 1
   end
 
+  def update_instruments instruments, transitions
+    new_state = instruments.dup
+    transitions.each do |t| 
+                      new_state[t[:instrument_key]] = 
+                                      (t[:command] == '+')
+                     end unless transitions.nil?
+    new_state
+  end
+
   def run
     return if metronome.nil?
+    @in_play = update_instruments @in_play, section.transitions
+    next_play = update_instruments @in_play, section.transitions
     metronome.when_done lambda {
                           update_count
                           run
@@ -35,6 +57,14 @@ class Conductor
                 |tap,measure|
                 print_beat(tap,section.rhythm[:beats])
                 print_measure(measure, section.repetition)
+=begin
+                print_instruments({
+                 :tap => tap,
+                 :in_play => @in_play,
+                 :next_play => next_play
+                })
+=end
+                
                 print_heading({
                                 :past_headings => prev_sections.map(&:heading),
                                 :heading => section.heading,

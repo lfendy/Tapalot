@@ -21,6 +21,7 @@ g2: guitar2
 d: drum
 v: vocal
 [3/4 180]
++g1 -g2
 heading_1 4x  
 heading_2 8x
 [4/4 120]
@@ -41,6 +42,11 @@ heading_b 10x
       s1.rhythm[:tempo].should == 180
       s1.heading.include?("heading_1").should be_true
       s1.repetition.should == 4
+      s1.transitions.count.should == 2
+      s1.transitions[0][:command].should == '+'
+      s1.transitions[0][:instrument_key].should == 'g1'
+      s1.transitions[1][:command].should == '-'
+      s1.transitions[1][:instrument_key].should == 'g2'
 
       s2 = sections[1]
       s2.rhythm.should be_nil

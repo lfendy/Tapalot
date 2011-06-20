@@ -46,18 +46,42 @@ grammar SongGrammar
 
   rule section
     r:(rhythm nl+)?
+    t:(transitions nl+)?
     heading repetition ws nl+ {
       def value
         SongSection.new({
                           :rhythm => r.respond_to?(:rhythm) ? r.rhythm.value : nil,
                           :heading => heading.text_value,
-                          :repetition => repetition.value
+                          :repetition => repetition.value,
+                          :transitions => t.respond_to?(:transitions) ? t.transitions.value : nil
                         })
       end
         
     }
   end
 
+  rule transitions
+    '' t:transition+ {
+      def value
+        t.elements.map{|x| x.value}
+      end
+    }
+  end
+
+  rule transition
+    instrument_command instrument_key ws {
+      def value
+        ({
+          :command => instrument_command.text_value.strip,
+          :instrument_key => instrument_key.text_value.strip
+         })
+      end
+    }
+  end
+
+  rule instrument_command
+    '+' / '-'
+  end
 
   rule rhythm
     ws '[' time_signature ws tempo ']' ws {
