@@ -24,7 +24,6 @@ module Console
   end
 
   def print_beat(x,max_x)
-    position_cursor 0, 0
     print "beat: " + (1..max_x).to_a.map {|c| c == x ? c.to_s.spread.black.on_white : c.to_s }.join
   end
 
@@ -33,7 +32,10 @@ module Console
   end
 
   def print_heading hash
-    heading = hash[:heading].green
+    heading = hash[:heading]
+    heading = heading.align_right 25
+    heading += hash[:heading_progress]
+    heading = heading.green
     past_headings = hash[:past_headings]
     future_headings = hash[:future_headings]
     headings = past_headings.concat([heading]).concat(future_headings)
@@ -48,7 +50,7 @@ module Console
     next_play    = hash[:next_play]
     heading      = hash[:heading]
     next_heading = hash[:next_heading]
-    print "\n\n"
+    #print "\n\n"
     print "\r    "
     print heading.align_right(4*beats+1).green
     print next_heading.align_right(20) unless next_heading.nil?
@@ -65,9 +67,9 @@ module Console
   end
 
   def play in_play, beats
-    s = in_play ? "#" : "_"
+    
     r = "" 
-    (beats*4).times { r += s }
+    beats.times { |x| s = in_play ? (x+1).to_s : "_"; 4.times { r += s } }
     r
   end
 

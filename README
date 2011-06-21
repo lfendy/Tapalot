@@ -1,22 +1,60 @@
 Tapalot
 -------
 
-
 ruby app to help bands play cover songs
 
-first release:
-take bpm value
-take measure value
-print out measure according to bpm and uom
+USAGE:
+
+ruby lib/main.rb iris.txt
+
+  where "iris.txt" is a file containing the song structure.
 
 
-second release: 
-given number of measures and beats,
-it will show the beats for measure times.
+Format for textfile:
 
-third:
-parse song structure
-tap and show according to song structure
+1. begins and ends with hashes (i.e. ####)
+e.g.
+####
+<song structure goes here>
+####
+
+2. specify a list of instruments included in the song at the top
+e.g.
+instruments:
+g: guitar
+d: drum
+k: keys
+b: bass
+
+3. specify the time signature and tempo(in bpm) between square bracket
+e.g.
+[4/4 180]
+
+4. specify several song sections (i.e. verse/chorus/bridge) with transition and repetitions
+e.g.
++k +v
+Verse 1 8x
+-g
+Chorus 16x
+
+--> this means keys(k) & vocal(v) enter at Verse 1, which runs 8 measures,
+--> then guitar doesn't play for the duration of Chorus, which runs 16 measures.
+
+
+
+
+For a better example, look at iris.txt
+
+
+
+
+
+
+
+
+
+
+
 
 
 ===========================
@@ -59,6 +97,8 @@ x play and show song structure.
 
 sample:
 
+
+####
 instruments:
 g1: lead guitar
 g2: guitar 2
@@ -81,9 +121,9 @@ chorus 8x
 
 [6/8 160]
 
-!v !g1
+!v !g1 <-- not yet implemented
 bridge 16x
-
+####
 
 
 

@@ -62,21 +62,23 @@ class Conductor
     next_beats = next_section.rhythm[:beats] unless next_section.nil?
     metronome.tap(rep) {
                 |tap,measure|
-                print_beat(tap,beats)
-                print_measure(measure, rep)
+                position_cursor 0,0
+                #print_beat(tap,beats)
+                #print_measure(measure, rep)
                 print_instruments({
                  :tap => tap,
                  :beats => beats,
                  :next_beats => next_beats,
                  :in_play => @in_play,
                  :next_play => next_play,
-                 :heading => heading,
+                 :heading => heading, 
                  :next_heading => next_heading
                 })
                 
                 print_heading({
                                 :past_headings => prev_sections.map(&:heading),
-                                :heading => heading,
+                                :heading => heading,  
+                                :heading_progress => "   ..." + measure.to_s + "/" + rep.to_s,
                                 :future_headings => next_sections.map(&:heading)
                               })
               }
