@@ -51,7 +51,7 @@ module Console
     print "\n\n"
     print "\r    "
     print heading.align_right(4*beats+1).green
-    print next_heading unless next_heading.nil?
+    print next_heading.align_right(20) unless next_heading.nil?
     print "\n"
 
     in_play.each_key do |key|

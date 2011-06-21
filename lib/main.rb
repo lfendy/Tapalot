@@ -16,6 +16,7 @@ class Main
     s = Song.parse f.read
     c = Conductor.new s
     c.run
+    system("afplay iris.mp3")
     #run s 
     sleep
   end

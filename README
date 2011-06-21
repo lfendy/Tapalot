@@ -22,7 +22,7 @@ tap and show according to song structure
 ===========================
 
 To do / To think about:
-. Conductor initialize function knows about Song structure,
+. Conductor 'initialize' function knows about Song structure,
 is this necessary? There is a bit too much coupling
 
 . Metronomes are instantiated for every Song Section,
@@ -32,6 +32,10 @@ is it possible to stop / reset / re-assign parameters to existing metronome ?
 . Test sucks, is it an indication of bad design ?
 in some cases, heavy mocking, also in other cases not DRY
 
+. Conductor.run function is too big
+tried to do too many things ?
+
+. Conductor coupled tightly with Console ?
 
 
 
@@ -41,13 +45,15 @@ in some cases, heavy mocking, also in other cases not DRY
 
 
 want to do:
-. parse input file (bpm, change in unit of measure, pauses, instruments)
-. run metronome
-. play and show song structure.
+x parse input file (bpm, change in unit of measure, pauses, instruments)
+x run metronome
+x play and show song structure.
 . easy keyboard control to repeat, stop, change bpm
 . hook with mp3 and try to play the specific section of song
 . want decimal number for number of measures
 . want way to define when an instrument enters
+. only show song structure that will be played ?
+. Show measure count alongside verse ?
 
 
 

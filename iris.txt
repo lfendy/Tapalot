@@ -1,19 +1,39 @@
 ####
 instruments:
-g1: guitar1
-g2: guitar2
+g: guitar
 d: drum
 b: bass
 v: vocal
 
-[4/4 152]
-+g1
-intro 8x 
-[6/8 152]
+[8/8 154]
++g
+intro 4x 
+
+[6/8 154]
 +b +d +v
-Verse 1 8x
-Verse 2 8x
--b
-Verse 3 8x
-Chorus 4x
+V1 "and I'd *Give up.." 8x
+[6/8 156]
+V2 "and *all I can.." 8x
+[6/8 153]
+Chorus "& I *Don't want.." 8x
+
+[8/8 154]
+-v
+Interlude 4/4 3x
+
+[6/8 154]
+Interlude end 1x
+
+[6/8 152]
++v
+V3 "& u *can't fight.." 8x
+[6/8 153]
+Chorus "& I *Don't want.." 8x
+[6/8 156]
+-v
+Interlude 6/8 8x
+
+[8/8 160]
+Interlude 4/4 8x
+Interlude 4/4 8x
 ####
